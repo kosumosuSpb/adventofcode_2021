@@ -81,8 +81,7 @@ def co2_rate(bite_list):
         for bite in bites:
             bit_str = ''.join(bit_str + bite[pos])
 
-        # finding the most rare, but i skip the instruction about what i should do when i found equally occurring
-        # its not right, but lucky me - its working
+        # finding the most rare. When i found equal - its choose 0 (as it should) because 0 less than 1
         most_rare = min(set(bit_str), key=bit_str.count)
 
         # filter bite list by most common
