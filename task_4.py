@@ -113,10 +113,10 @@ def find_last_winner(moves, boards):
             # check for win
             if board.win_check():
                 last_move, sum_unmark, win_board = int(move), board.sum_unmarked(), boards.index(board)
-                continue  # not append win board into list - this is correct remove board
+                continue  # not append win board into new list - to correct remove board from board list
 
-                # code before we can replace by function that we use to find the one winner
-                
+                # code above we can replace by function that we use to find the one winner
+
             new_boards.append(board)
 
         boards = new_boards[:]  # make copy, not link
