@@ -19,7 +19,7 @@ class BingoBoard:
         return f'<BingoObj: {self.board[0][:2]}...>'
 
     # mark num to true in board
-    def mark_num(self, num: str):
+    def mark_num(self, num: str) -> bool:
         """
         find num in board and mark it as True
         :param num: num to find
@@ -38,7 +38,7 @@ class BingoBoard:
         return False
 
     # win check
-    def win_check(self):
+    def win_check(self) -> bool:
         """
         search for row or column all True
         :return: bool
@@ -55,17 +55,17 @@ class BingoBoard:
         return False
 
     # take sum of unmarked elements
-    def sum_unmarked(self):
+    def sum_unmarked(self) -> int:
         # make list of unmarked elements, int them, then - return the sum
-        return sum(map(int, [num for line in self.board for num, mark in line if not mark]))
+        return sum(int(num) for line in self.board for num, mark in line if not mark)
 
 
 file_name = 'task_4_input.txt'
 test_file_name = 'task_4_input_test.txt'
 
 
-# prepare the data. Returns move list + row list
-def source_preparing(file_name):
+# prepare the data. Returns tuple of move list + row list
+def source_preparing(file_name: str) -> tuple:
     with open(file_name, 'r') as f:
         row_list = [line for line in f.read().splitlines()]
 
@@ -81,7 +81,7 @@ def source_preparing(file_name):
 
 
 # make the list of bingo boards from row list
-def make_bingo_list(row_list):
+def make_bingo_list(row_list: list) -> list:
     boards = []  # list of bingo boards objects
 
     boards_count = len(row_list)//5
@@ -95,7 +95,15 @@ def make_bingo_list(row_list):
     return boards
 
 
-def find_winner(moves, boards):
+def find_winner(moves: list, boards: list) -> tuple:
+    """
+    function to find the win board
+
+    :param moves: list of moves sequence
+    :param boards: list of Bingo Board objects
+    :return: tuple of win move, sum of unmarked numbers in win board and index of win board
+    """
+
     for move in moves:
         for board in boards:
             board.mark_num(move)
@@ -103,7 +111,15 @@ def find_winner(moves, boards):
                 return int(move), board.sum_unmarked(), boards.index(board)
 
 
-def find_last_winner(moves, boards):
+def find_last_winner(moves: list, boards: list) -> tuple:
+    """
+    function to find the last board that win
+
+    :param moves: list of moves sequence
+    :param boards: list of Bingo Board objects
+    :return: tuple of last win move and sum of unmarked numbers in win board
+    """
+
     last_move, sum_unmark, win_board, new_boards = 0, 0, 0, []
     for move in moves:
         for board in boards:
@@ -116,6 +132,7 @@ def find_last_winner(moves, boards):
                 continue  # not append win board into new list - to correct remove board from board list
 
                 # code above we can replace by function that we use to find the one winner
+                # but i have no power to realize that simple task, sorry, its strange i know
 
             new_boards.append(board)
 
